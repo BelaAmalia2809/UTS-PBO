@@ -27,8 +27,9 @@ public class frmMain extends javax.swing.JFrame {
     /**
      * Creates new form frmMain
      */
-    public frmMain() {
+    public frmMain(String user) {
         initComponents();
+        tfNamaKasir.setText(user);
         selectData();
     }
 
@@ -43,7 +44,7 @@ public class frmMain extends javax.swing.JFrame {
 
         jTextField1 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
-        btnSave = new javax.swing.JButton();
+        btnSearch = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnPrint = new javax.swing.JButton();
@@ -65,6 +66,13 @@ public class frmMain extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        tfNamaKasir = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        dcTglPinjam2 = new com.toedter.calendar.JDateChooser();
+        dcTglKembali2 = new com.toedter.calendar.JDateChooser();
+        jLabel12 = new javax.swing.JLabel();
+        btnSave = new javax.swing.JButton();
 
         jTextField1.setText("jTextField1");
 
@@ -75,14 +83,14 @@ public class frmMain extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(153, 153, 255));
         jPanel1.setLayout(null);
 
-        btnSave.setText("SAVE");
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
+        btnSearch.setText("SEARCH");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
+                btnSearchActionPerformed(evt);
             }
         });
-        jPanel1.add(btnSave);
-        btnSave.setBounds(10, 440, 70, 23);
+        jPanel1.add(btnSearch);
+        btnSearch.setBounds(860, 120, 110, 30);
 
         btnClear.setText("CLEAR");
         btnClear.addActionListener(new java.awt.event.ActionListener() {
@@ -91,7 +99,7 @@ public class frmMain extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnClear);
-        btnClear.setBounds(90, 440, 70, 23);
+        btnClear.setBounds(100, 470, 70, 23);
 
         btnDelete.setText("DELETE");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -100,7 +108,7 @@ public class frmMain extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnDelete);
-        btnDelete.setBounds(170, 440, 80, 23);
+        btnDelete.setBounds(180, 470, 80, 23);
 
         btnPrint.setText("PRINT");
         btnPrint.addActionListener(new java.awt.event.ActionListener() {
@@ -109,7 +117,7 @@ public class frmMain extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnPrint);
-        btnPrint.setBounds(260, 440, 80, 23);
+        btnPrint.setBounds(270, 470, 80, 23);
 
         jPanel2.setBackground(new java.awt.Color(51, 51, 255));
         jPanel2.setLayout(null);
@@ -148,7 +156,7 @@ public class frmMain extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tbData);
 
         jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(370, 130, 600, 330);
+        jScrollPane1.setBounds(370, 160, 600, 330);
         jPanel1.add(dcTglKembali);
         dcTglKembali.setBounds(170, 380, 130, 30);
         jPanel1.add(dcTglPinjam);
@@ -202,6 +210,35 @@ public class frmMain extends javax.swing.JFrame {
         jPanel1.add(jLabel3);
         jLabel3.setBounds(20, 130, 120, 30);
 
+        jLabel10.setText("NAMA KASIR");
+        jPanel1.add(jLabel10);
+        jLabel10.setBounds(20, 430, 100, 14);
+
+        tfNamaKasir.setEditable(false);
+        jPanel1.add(tfNamaKasir);
+        tfNamaKasir.setBounds(170, 420, 130, 30);
+
+        jLabel11.setText("TANGGAL PINJAM");
+        jPanel1.add(jLabel11);
+        jLabel11.setBounds(370, 130, 110, 14);
+        jPanel1.add(dcTglPinjam2);
+        dcTglPinjam2.setBounds(470, 120, 130, 30);
+        jPanel1.add(dcTglKembali2);
+        dcTglKembali2.setBounds(710, 120, 130, 30);
+
+        jLabel12.setText("TANGGAL KEMBALI");
+        jPanel1.add(jLabel12);
+        jLabel12.setBounds(610, 130, 110, 14);
+
+        btnSave.setText("SAVE");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnSave);
+        btnSave.setBounds(20, 470, 70, 23);
+
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 980, 520);
 
@@ -212,32 +249,33 @@ public class frmMain extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfAlamatActionPerformed
 
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        String kolom[] = {"No Struk","Nama","Alamat","No Polisi","Tanggal Peminjaman","Tanggal Kembali", "Total Harga", "Nama Kasir"};
+        DefaultTableModel dtm = new DefaultTableModel(null, kolom);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String tglPinjam = dateFormat.format(dcTglPinjam.getDate());
-        String tglKembali = dateFormat.format(dcTglKembali.getDate());
-        int pinjam_h = dcTglPinjam.getDate().getDate();
-        int kembali_h = dcTglKembali.getDate().getDate();
-        int totalhari = kembali_h - pinjam_h;
-        int total = totalhari * 20000;
-
-                
-        if ("".equals(tfNama.getText())||"".equals(tfAlamat.getText())||"".equals(tfNoStruk.getText())||"".equals(tfNoStruk.getText())||"".equals(tglPinjam)||"".equals(tglKembali)){
-            JOptionPane.showMessageDialog(this, "Harap Lengkapi Data", "Error", JOptionPane.WARNING_MESSAGE);
+        String tglpinjam = dateFormat.format(dcTglPinjam2.getDate());
+        String tglkembali = dateFormat.format(dcTglKembali2.getDate());
+ 
+        String SQL = "SELECT * FROM tb_pinjam WHERE tgl_pinjam='"+tglpinjam+"' AND tgl_kembali='"+tglkembali+"'";
+        ResultSet rs = Koneksi_DB.executeQuery(SQL);
+        try {
+            while(rs.next()){
+                String no_struk = rs.getString(1);
+                String nama = rs.getString(2);
+                String alamat = rs.getString(3);
+                String no_pol = rs.getString(4);
+                String tgl_pinjam = rs.getString(5);
+                String tgl_kembali = rs.getString(6);
+                String harga = rs.getString(7);
+                String nama_kasir = rs.getString(8);
+                String data[] = {no_struk, nama, alamat, no_pol, tgl_pinjam, tgl_kembali, harga, nama_kasir};
+                dtm.addRow(data);
+            }
+        } catch(SQLException ex){
+            Logger.getLogger(frmMain.class.getName()).log(Level.SEVERE, null, ex);
         }
-        else{
-         
-         String SQL = "INSERT INTO tb_pinjam(no_struk, nama, alamat, no_pol, tgl_pinjam, tgl_kembali, harga) " + "VALUES('"+tfNoStruk.getText()+"','"+tfNama.getText()+"','"+tfAlamat.getText()+"','"+tfNoPol.getText()+"','"+tglPinjam+"','"+tglKembali+"','"+total+"')";
-         int status = Koneksi_DB.execute(SQL);
-         if (status == 1){
-             JOptionPane.showMessageDialog(this, "Data Berhasil Ditambahkan", "Sukses", JOptionPane.INFORMATION_MESSAGE);
-             selectData();
-         }
-         else{
-             JOptionPane.showMessageDialog(this, "Data Gagal Ditambahkan", "Gagal", JOptionPane.WARNING_MESSAGE);
-         }
-        }
-    }//GEN-LAST:event_btnSaveActionPerformed
+        tbData.setModel(dtm);
+    }//GEN-LAST:event_btnSearchActionPerformed
 
     private void tfNoStrukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNoStrukActionPerformed
         // TODO add your handling code here:
@@ -250,6 +288,8 @@ public class frmMain extends javax.swing.JFrame {
           tfAlamat.setText(tbData.getValueAt(baris, 2).toString());
           tfNoStruk.setText(tbData.getValueAt(baris, 0).toString());
           tfNoPol.setText(tbData.getValueAt(baris, 3).toString());
+          tfNamaKasir.setText(tbData.getValueAt(baris, 7).toString());
+          
           
           SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
             Date dateFormat = null;
@@ -274,6 +314,7 @@ public class frmMain extends javax.swing.JFrame {
       tfNoPol.setText("");
       dcTglPinjam.setDate(null);
       dcTglKembali.setDate(null);
+      tfNamaKasir.setText("");
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -303,6 +344,33 @@ public class frmMain extends javax.swing.JFrame {
            System.err.format("Cannot Print %s&n", e.getMessage());
        } 
     }//GEN-LAST:event_btnPrintActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String tglPinjam = dateFormat.format(dcTglPinjam.getDate());
+        String tglKembali = dateFormat.format(dcTglKembali.getDate());
+        int pinjam_h = dcTglPinjam.getDate().getDate();
+        int kembali_h = dcTglKembali.getDate().getDate();
+        int totalhari = kembali_h - pinjam_h;
+        int total = totalhari * 20000;
+
+                
+        if ("".equals(tfNama.getText())||"".equals(tfAlamat.getText())||"".equals(tfNoStruk.getText())||"".equals(tfNoStruk.getText())||"".equals(tglPinjam)||"".equals(tglKembali)){
+            JOptionPane.showMessageDialog(this, "Harap Lengkapi Data", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        else{
+         
+         String SQL = "INSERT INTO tb_pinjam(no_struk, nama, alamat, no_pol, tgl_pinjam, tgl_kembali, harga) " + "VALUES('"+tfNoStruk.getText()+"','"+tfNama.getText()+"','"+tfAlamat.getText()+"','"+tfNoPol.getText()+"','"+tglPinjam+"','"+tglKembali+"','"+total+"')";
+         int status = Koneksi_DB.execute(SQL);
+         if (status == 1){
+             JOptionPane.showMessageDialog(this, "Data Berhasil Ditambahkan", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+             selectData();
+         }
+         else{
+             JOptionPane.showMessageDialog(this, "Data Gagal Ditambahkan", "Gagal", JOptionPane.WARNING_MESSAGE);
+         }
+        }
+    }//GEN-LAST:event_btnSaveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -334,7 +402,8 @@ public class frmMain extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmMain().setVisible(true);
+                String user = null;
+                new frmMain(user).setVisible(true);
             }
         });
     }
@@ -344,9 +413,15 @@ public class frmMain extends javax.swing.JFrame {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnPrint;
     private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnSearch;
     private com.toedter.calendar.JDateChooser dcTglKembali;
+    private com.toedter.calendar.JDateChooser dcTglKembali2;
     private com.toedter.calendar.JDateChooser dcTglPinjam;
+    private com.toedter.calendar.JDateChooser dcTglPinjam2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -362,12 +437,13 @@ public class frmMain extends javax.swing.JFrame {
     private javax.swing.JTable tbData;
     private javax.swing.JTextField tfAlamat;
     private javax.swing.JTextField tfNama;
+    private javax.swing.JTextField tfNamaKasir;
     private javax.swing.JTextField tfNoPol;
     private javax.swing.JTextField tfNoStruk;
     // End of variables declaration//GEN-END:variables
 
     private void selectData() {
-        String kolom[] = {"No Struk","Nama","Alamat","No Polisi","Tanggal Peminjaman","Tanggal Kembali", "Total Harga"};
+        String kolom[] = {"No Struk","Nama","Alamat","No Polisi","Tanggal Peminjaman","Tanggal Kembali", "Total Harga", "Nama Kasir"};
         DefaultTableModel dtm = new DefaultTableModel(null, kolom);
         String SQL = "SELECT * FROM tb_pinjam";
         ResultSet rs = Koneksi_DB.executeQuery(SQL);
@@ -380,7 +456,8 @@ public class frmMain extends javax.swing.JFrame {
                 String tgl_pinjam = rs.getString(5);
                 String tgl_kembali = rs.getString(6);
                 String harga = rs.getString(7);
-                String data[] = {no_struk, nama, alamat, no_pol, tgl_pinjam, tgl_kembali, harga};
+                String nama_kasir = rs.getString(8);
+                String data[] = {no_struk, nama, alamat, no_pol, tgl_pinjam, tgl_kembali, harga, nama_kasir};
                 dtm.addRow(data);
             }
         } catch(SQLException ex){

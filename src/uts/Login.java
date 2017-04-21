@@ -18,7 +18,8 @@ import javax.swing.JOptionPane;
  * @author user
  */
 public class Login extends javax.swing.JFrame {
-
+    
+    
     /**
      * Creates new form Login
      */
@@ -81,7 +82,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnSignIn);
-        btnSignIn.setBounds(230, 200, 73, 23);
+        btnSignIn.setBounds(223, 200, 80, 23);
 
         btnExit.setText("EXIT");
         btnExit.addActionListener(new java.awt.event.ActionListener() {
@@ -99,7 +100,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnSignUP);
-        btnSignUP.setBounds(50, 200, 73, 23);
+        btnSignUP.setBounds(50, 200, 80, 23);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 410, 260);
@@ -128,14 +129,16 @@ public class Login extends javax.swing.JFrame {
     private void btnSignInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignInActionPerformed
         Connection connection;
         PreparedStatement ps;
+        String user;
         try{
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_utspbo", "root", "");
             ps = connection.prepareStatement("SELECT username, password FROM tb_admin WHERE username = ? AND password = ?");
             ps.setString(1, tfUsername.getText());
             ps.setString(2, tfPassword.getText());
+            user = tfUsername.getText();
             ResultSet result = ps.executeQuery();
             if(result.next()){
-                new frmMain().show();
+                new frmMain(user).show();
                 this.dispose();
             }
             else{
